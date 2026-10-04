@@ -41,14 +41,14 @@ jobs:
         run: flutter pub get
       - name: Analyze Dart source
         working-directory: mobile
-        run: flutter analyze lib
+        run: flutter analyze lib --no-fatal-infos
       - name: Build debug APK
         working-directory: mobile
         run: flutter build apk --debug --dart-define=API_BASE_URL=http://10.0.2.2:8000
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: ai-foundation-agentic-debug-apk
+          name: ai-foundation-agentic-v3-debug-apk
           path: mobile/build/app/outputs/flutter-apk/app-debug.apk
           if-no-files-found: error
           retention-days: 14

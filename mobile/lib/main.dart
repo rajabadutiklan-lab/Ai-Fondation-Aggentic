@@ -48,6 +48,9 @@ class _ControlCenterPageState extends State<ControlCenterPage> {
   bool _submitting = false;
   bool _paused = false;
   int _activeGoals = 0;
+  int _activeTasks = 0;
+  int _pendingApprovals = 0;
+  int _companies = 0;
   String? _error;
   List<dynamic> _goals = const [];
 
@@ -63,6 +66,14 @@ class _ControlCenterPageState extends State<ControlCenterPage> {
     super.dispose();
   }
 
+  void _applySystemState(Map<String, dynamic> system) {
+    _paused = system['paused'] == true;
+    _activeGoals = (system['active_goals'] as num?)?.toInt() ?? 0;
+    _activeTasks = (system['active_tasks'] as num?)?.toInt() ?? 0;
+    _pendingApprovals = (system['pending_approvals'] as num?)?.toInt() ?? 0;
+    _companies = (system['companies'] as num?)?.toInt() ?? 0;
+  }
+
   Future<void> _refresh() async {
     if (mounted) {
       setState(() {
@@ -75,8 +86,7 @@ class _ControlCenterPageState extends State<ControlCenterPage> {
       final goals = await _api.getGoals();
       if (!mounted) return;
       setState(() {
-        _paused = system['paused'] == true;
-        _activeGoals = (system['active_goals'] as num?)?.toInt() ?? 0;
+        _applySystemState(system);
         _goals = goals;
       });
     } catch (error) {
@@ -111,10 +121,7 @@ class _ControlCenterPageState extends State<ControlCenterPage> {
     try {
       final system = await _api.setPaused(!_paused);
       if (!mounted) return;
-      setState(() {
-        _paused = system['paused'] == true;
-        _activeGoals = (system['active_goals'] as num?)?.toInt() ?? 0;
-      });
+      setState(() => _applySystemState(system));
     } catch (error) {
       if (mounted) setState(() => _error = error.toString());
     } finally {
@@ -218,22 +225,46 @@ class _ControlCenterPageState extends State<ControlCenterPage> {
   }
 
   Widget _buildStatusGrid() {
-    return Row(
+    return Column(
       children: [
-        Expanded(
-          child: _StatCard(
-            label: 'AI Pusat',
-            value: _paused ? 'Dijeda' : 'Aktif',
-            icon: _paused ? Icons.pause_circle_outline : Icons.bolt_rounded,
-          ),
+        Row(
+          children: [
+            Expanded(
+              child: _StatCard(
+                label: 'AI Pusat',
+                value: _paused ? 'Dijeda' : 'Aktif',
+                icon: _paused ? Icons.pause_circle_outline : Icons.bolt_rounded,
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: _StatCard(
+                label: 'Company',
+                value: _loading ? '...' : '$_companies',
+                icon: Icons.business_center_outlined,
+              ),
+            ),
+          ],
         ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: _StatCard(
-            label: 'Goal Aktif',
-            value: _loading ? '...' : '$_activeGoals',
-            icon: Icons.track_changes_rounded,
-          ),
+        const SizedBox(height: 12),
+        Row(
+          children: [
+            Expanded(
+              child: _StatCard(
+                label: 'Task Aktif',
+                value: _loading ? '...' : '$_activeTasks',
+                icon: Icons.account_tree_outlined,
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: _StatCard(
+                label: 'Approval',
+                value: _loading ? '...' : '$_pendingApprovals',
+                icon: Icons.verified_user_outlined,
+              ),
+            ),
+          ],
         ),
       ],
     );
@@ -315,8 +346,8 @@ class _ControlCenterPageState extends State<ControlCenterPage> {
                   const SizedBox(height: 4),
                   Text(
                     _paused
-                        ? 'Semua goal baru dihentikan sementara.'
-                        : 'Tekan hanya jika seluruh AI perlu berhenti.',
+                        ? 'Goal dan task baru dihentikan sementara.'
+                        : 'Tekan jika seluruh AI dan task baru perlu berhenti.',
                     style: const TextStyle(color: Color(0xFF707078)),
                   ),
                 ],
@@ -350,7 +381,7 @@ class _ControlCenterPageState extends State<ControlCenterPage> {
                   ),
                 ),
                 Text(
-                  '${_goals.length} goal',
+                  '${_goals.length} goal • $_activeGoals aktif',
                   style: const TextStyle(color: Color(0xFF77777F)),
                 ),
               ],

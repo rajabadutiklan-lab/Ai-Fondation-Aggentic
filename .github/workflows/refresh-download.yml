@@ -1,0 +1,21 @@
+name: Refresh APK download link
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Refresh stable preview assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          BUILD_TAG=$(gh release list --limit 100 --json tagName --jq '[.[] | select(.tagName | startswith("build-"))][0].tagName // empty')
+          test -n "$BUILD_TAG"
+          gh release download "$BUILD_TAG" --pattern 'EWASHO-preview.apk*'
+          sha256sum --check EWASHO-preview.apk.sha256
+          gh release view preview-3 >/dev/null 2>&1 || gh release create preview-3 --title "EWASHO Preview Terbaru" --notes "APK terbaru EWASHO." --prerelease
+          gh release upload preview-3 EWASHO-preview.apk EWASHO-preview.apk.sha256 --clobber
+          gh release edit preview-3 --title "EWASHO Preview Terbaru" --notes "APK EWASHO dari release $BUILD_TAG. Data contoh."

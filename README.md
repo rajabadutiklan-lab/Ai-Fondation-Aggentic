@@ -1,57 +1,37 @@
-# AI Foundation Agentic
+# EWASHO
 
-AI Business OS / Agentic Control Center untuk mengelola banyak perusahaan dari satu AI Pusat.
+Prototipe beranda kasir laundry menggunakan Flutter. Efek kaca hanya pada slider; kartu omzet, grid menu dan navigasi memakai warna solid. Tanpa dependensi tambahan.
 
-## Prinsip utama
+## Menjalankan
 
-- **Automatic First**: owner cukup memberi tujuan, AI mengurus alur teknis.
-- **Approval When Needed**: pembelian, biaya, publikasi eksternal, perubahan produksi, dan aksi berisiko berhenti di Approval Center.
-- **Manual as Backup**: konektor, API, token reference, webhook, dan detail teknis tetap tersedia bila dibutuhkan.
-- **Human-readable Operations**: dashboard menampilkan progres bisnis, bukan log teknis mentah.
-- **Company Isolation**: setiap perusahaan punya Company Agent, divisi, specialist, konektor, budget, dan audit trail sendiri.
-- **Safe Self-Improvement**: AI boleh mengusulkan peningkatan sistem, tetapi perubahan berisiko tetap melewati kontrol owner.
-- **Cost-aware AI Router**: task ringan diarahkan ke model hemat, reasoning berat ke model yang lebih kuat.
+Pasang Flutter stable yang mendukung Dart 3.4 atau lebih baru, lalu:
 
-## Hierarki
+```sh
+git clone https://github.com/rajabadutiklan-lab/Ai-Fondation-Aggentic.git
+cd Ai-Fondation-Aggentic
+flutter create --project-name ewasho --platforms android,web .
+flutter pub get
+flutter run
+```
 
-`AI Pusat -> Company Agent -> Division Manager -> Specialist Agent -> Worker / Automation`
+Folder platform belum disertakan; perintah `flutter create` menghasilkan scaffolding platform lokal. Pertahankan `lib/main.dart` dari repository bila alat menawarkan overwrite. Hapus test bawaan counter di `test/widget_test.dart` bila dihasilkan, karena aplikasi ini tidak memakai counter.
 
-## Foundation v3
+## Status
 
-Backend sekarang menyediakan:
+- Beranda, slider manual 3 halaman, pilihan outlet, navigasi placeholder.
+- Data omzet contoh; belum backend, kamera, transaksi atau laporan nyata.
+- Logo dan ilustrasi berupa widget sederhana, belum aset asli referensi.
+- Satu BackdropFilter terpotong pada batas slider, sigma 5; ubah `enableGlass` ke false untuk menonaktifkan blur.
+- Pemeriksaan analyzer dan widget test beranda, geser slider, serta navigasi sudah lulus di GitHub Actions pada Flutter 3.24.5. Belum diuji pada HP fisik; performa perangkat belum diukur.
 
-- Company workspace dan auto-bootstrap struktur divisi.
-- Website, Social Media, Marketing, CRM & Sales, WhatsApp, Finance, Research, dan Engineering.
-- Specialist untuk SEO, publishing, Search Console, analytics, CRO, creative, outreach, capital allocation, coding, workflow engineering, integration, dan AI system improvement.
-- Goal planner yang memecah tujuan menjadi task.
-- Risk policy dan Approval Center.
-- Emergency Pause.
-- Connector Center: website/CMS, GitHub, WhatsApp, Meta, TikTok, Search Console, Analytics, domain/DNS, hosting/VPS, email, payments.
-- AI Model Router berbasis kompleksitas/risiko.
-- Self-Improvement Queue.
-- Audit Log.
-- Dashboard API.
+Basis EWASHO disalin ke AI Foundation sesuai instruksi pemilik. File implementasi AI Foundation lama digantikan; kode aplikasi EWASHO dipertahankan. Sumber: rajabadutiklan-lab/Ewasho-gpt, commit 9d0037dc84f52acb21546363c20abc4f4104afd3.
 
-Android Flutter Control Center sekarang memiliki 5 area utama:
+## APK uji Android
 
-1. Beranda / AI Pusat.
-2. Perusahaan.
-3. Approval Center.
-4. Konektor.
-5. Sistem AI.
+Workflow `Build Android APK` menghasilkan APK release dengan debug signing untuk mencoba prototipe, bukan untuk Play Store. APK tersedia di halaman [Releases](https://github.com/rajabadutiklan-lab/Ai-Fondation-Aggentic/releases) setelah build berhasil. Pilih `EWASHO-preview.apk` pada Assets. Repository ini public; APK dapat diunduh dari halaman Releases.
 
-APK mempunyai **Preview Offline** agar desain dan alur dapat diperiksa di HP walaupun backend VPS belum dipasang. Ketika backend terhubung, tombol aksi memakai API sungguhan.
+Setiap build baru memakai debug keystore runner; jika Android menolak pembaruan karena tanda tangan berbeda, hapus prototipe lama terlebih dahulu. Aplikasi ini hanya berisi data contoh.
 
-## Struktur repo
+## Halaman Laporan
 
-- `mobile/` — Flutter Android Control Center.
-- `server/` — FastAPI control plane.
-- `docker-compose.yml` — stack VPS terisolasi.
-- `docs/` — blueprint dan aturan sistem.
-- `.github/workflows/` — backend tests, Flutter analyze, build APK, artifact.
-
-## Batas foundation saat ini
-
-Foundation v3 adalah control plane dan arsitektur kerja. Eksekusi nyata ke provider eksternal tetap membutuhkan credential/API resmi masing-masing provider dan worker connector yang sesuai. Secret tidak boleh ditaruh langsung di aplikasi; sistem memakai `credential_ref` untuk mengarah ke secret manager/Vault.
-
-Repo ini **khusus AI Foundation Agentic**. Repo aplikasi Goyana Laundry tidak disentuh.
+Menu Laporan membuka tampilan native Flutter mengikuti referensi merah/pink: filter periode, pemilih tanggal/outlet, grafik yang dapat diketuk, layanan terlaris, diagram pembayaran dan rekap. Angka masih simulasi untuk prototipe. Efek kaca hanya di slider beranda. Tautan unduh preview-3 selalu diperbarui setelah build baru berhasil; release bernomor lain menyimpan sumber dan APK tiap build.

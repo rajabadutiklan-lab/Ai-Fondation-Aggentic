@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'foundation_pages.dart';
 
 void main() => runApp(const AiFoundationApp());
 
@@ -25,15 +26,7 @@ class FoundationHome extends StatefulWidget {
 
 class _FoundationHomeState extends State<FoundationHome> {
   String selected = 'Semua Perusahaan';
-  void open(String name) => Navigator.push(context, MaterialPageRoute<void>(builder: (_) => Scaffold(
-    appBar: AppBar(title: Text(name)),
-    body: Center(child: Padding(padding: const EdgeInsets.all(28), child: Column(mainAxisSize: MainAxisSize.min, children: [
-      Icon(name == 'AI Pusat' ? Icons.auto_awesome : Icons.dashboard_customize_outlined, size: 62, color: blue),
-      const SizedBox(height: 16), Text(name, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-      const SizedBox(height: 12),
-      Text(name == 'AI Pusat' ? 'Pusat kendali agentic: model AI, API key, agent, tugas, dan pemantauan. Konfigurasi backend belum tersambung.' : 'Modul $name sedang disiapkan. Belum tersambung ke data operasional.', textAlign: TextAlign.center),
-    ]))),
-  )));
+  void open(String name) => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => FoundationPage(title: name)));
   Widget glass({required Widget child, EdgeInsets padding = const EdgeInsets.all(16)}) => Container(
     padding: padding,
     decoration: BoxDecoration(color: Colors.white.withValues(alpha: .92), borderRadius: BorderRadius.circular(22), border: Border.all(color: Colors.white, width: 1.5), boxShadow: const [BoxShadow(color: Color(0x132B67AA), blurRadius: 22, offset: Offset(0, 7))]),

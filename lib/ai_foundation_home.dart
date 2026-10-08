@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 void main() => runApp(const AiFoundationApp());
 
 const navy = Color(0xFF101E46);
-const blue = Color(0xFF258DFF);
+const blue = Color(0xFFFF4B4D);
+const pageBg = Color(0xFFF3F5F7);
 
 class AiFoundationApp extends StatelessWidget {
   const AiFoundationApp({super.key});
@@ -11,7 +12,7 @@ class AiFoundationApp extends StatelessWidget {
   Widget build(BuildContext context) => MaterialApp(
     title: 'AI Foundation',
     debugShowCheckedModeBanner: false,
-    theme: ThemeData(useMaterial3: true, colorScheme: ColorScheme.fromSeed(seedColor: blue), scaffoldBackgroundColor: const Color(0xFFF2F7FF)),
+    theme: ThemeData(useMaterial3: true, colorScheme: ColorScheme.fromSeed(seedColor: blue), scaffoldBackgroundColor: pageBg),
     home: const FoundationHome(),
   );
 }
@@ -35,13 +36,13 @@ class _FoundationHomeState extends State<FoundationHome> {
   )));
   Widget glass({required Widget child, EdgeInsets padding = const EdgeInsets.all(16)}) => Container(
     padding: padding,
-    decoration: BoxDecoration(color: Colors.white.withValues(alpha: .80), borderRadius: BorderRadius.circular(22), border: Border.all(color: Colors.white, width: 1.5), boxShadow: const [BoxShadow(color: Color(0x132B67AA), blurRadius: 22, offset: Offset(0, 7))]),
+    decoration: BoxDecoration(color: Colors.white.withValues(alpha: .92), borderRadius: BorderRadius.circular(22), border: Border.all(color: Colors.white, width: 1.5), boxShadow: const [BoxShadow(color: Color(0x132B67AA), blurRadius: 22, offset: Offset(0, 7))]),
     child: child,
   );
   Widget core(String name, String subtitle, IconData icon, Color color, {bool big = false}) => Expanded(
     flex: big ? 12 : 10,
     child: InkWell(onTap: () => open(name), borderRadius: BorderRadius.circular(20), child: Column(children: [
-      Container(height: big ? 100 : 82, width: big ? 100 : 82, decoration: BoxDecoration(shape: BoxShape.circle, gradient: RadialGradient(colors: [Colors.white, color.withValues(alpha: .26), color.withValues(alpha: .62)]), boxShadow: [BoxShadow(color: color.withValues(alpha: .18), blurRadius: 22)]), child: Icon(icon, size: big ? 49 : 42, color: color)),
+      Container(height: big ? 100 : 82, width: big ? 100 : 82, decoration: BoxDecoration(shape: BoxShape.circle, gradient: RadialGradient(colors: [Colors.white, color.withValues(alpha: .12), color.withValues(alpha: .42)]), boxShadow: [BoxShadow(color: color.withValues(alpha: .18), blurRadius: 22)]), child: Icon(icon, size: big ? 49 : 42, color: color)),
       const SizedBox(height: 9), Text(name, textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold, fontSize: big ? 17 : 15, color: navy)),
       Text(subtitle, textAlign: TextAlign.center, style: const TextStyle(fontSize: 11, color: Colors.blueGrey)),
     ])),
@@ -59,23 +60,23 @@ class _FoundationHomeState extends State<FoundationHome> {
       Container(width: central ? 66 : 38, height: central ? 66 : 38,
         decoration: central ? const BoxDecoration(shape: BoxShape.circle, gradient: LinearGradient(colors: [Color(0xFFFF5258), Color(0xFFE90024)])) : null,
         child: Icon(icon, color: central ? Colors.white : name == 'Beranda' ? Colors.red : const Color(0xFF45566F), size: central ? 31 : 26)),
-      Text(name, style: TextStyle(fontSize: 11, color: name == 'Beranda' ? Colors.red : navy)),
+      Text(name, style: TextStyle(fontSize: 11, color: name == 'Beranda' ? const Color(0xFFFF343D) : navy)),
     ]),
   ));
   @override
   Widget build(BuildContext context) => Scaffold(
-    body: SafeArea(child: Center(child: ConstrainedBox(constraints: const BoxConstraints(maxWidth: 650), child: ListView(padding: const EdgeInsets.fromLTRB(16, 16, 16, 24), children: [
-      Row(children: [
-        const Icon(Icons.auto_awesome, color: blue, size: 33), const SizedBox(width: 7),
-        const Expanded(child: Text('AI Foundation', style: TextStyle(color: navy, fontSize: 23, fontWeight: FontWeight.bold))),
-        PopupMenuButton<String>(tooltip: 'Pilih perusahaan', onSelected: (value) => setState(() => selected = value), itemBuilder: (_) => ['Semua Perusahaan', 'RajaBadut', 'Goyana', 'Chatku'].map((e) => PopupMenuItem(value: e, child: Text(e))).toList(), child: Row(children: [Text(selected, style: const TextStyle(fontSize: 11)), const Icon(Icons.keyboard_arrow_down)])),
-        IconButton(onPressed: () => open('Notifikasi'), icon: const Icon(Icons.notifications_outlined)),
-      ]),
+    body: DecoratedBox(decoration: const BoxDecoration(gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [Color(0xFFE9EDF2), Color(0xFFF9FAFB), Color(0xFFEFF2F5)])), child: SafeArea(child: Center(child: ConstrainedBox(constraints: const BoxConstraints(maxWidth: 650), child: ListView(padding: const EdgeInsets.fromLTRB(16, 16, 16, 24), children: [
+      Container(margin: const EdgeInsets.fromLTRB(-16, -16, -16, 0), padding: const EdgeInsets.fromLTRB(16, 20, 16, 20), decoration: const BoxDecoration(gradient: LinearGradient(colors: [Color(0xFFFF343D), Color(0xFFFF6660)])), child: Row(children: [
+        const Icon(Icons.auto_awesome, color: Colors.white, size: 33), const SizedBox(width: 7),
+        const Expanded(child: Text('AI Foundation', style: TextStyle(color: Colors.white, fontSize: 23, fontWeight: FontWeight.bold))),
+        PopupMenuButton<String>(tooltip: 'Pilih perusahaan', onSelected: (value) => setState(() => selected = value), itemBuilder: (_) => ['Semua Perusahaan', 'RajaBadut', 'Goyana', 'Chatku'].map((e) => PopupMenuItem(value: e, child: Text(e))).toList(), child: Row(children: [Text(selected, style: const TextStyle(fontSize: 11)), const Icon(Icons.keyboard_arrow_down, color: Colors.white)])),
+        IconButton(onPressed: () => open('Notifikasi'), icon: const Icon(Icons.notifications_outlined, color: Colors.white)),
+      ])),
       const SizedBox(height: 30),
       Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
         core('AI Builder', 'Buat & Kembangkan', Icons.view_in_ar_rounded, blue),
-        core('AI Pusat', 'Kelola & Pantau', Icons.auto_awesome, const Color(0xFF6755E9), big: true),
-        core('AI Guardian', 'Lindungi & Optimalkan', Icons.verified_user_rounded, const Color(0xFF00BA9B)),
+        core('AI Pusat', 'Kelola & Pantau', Icons.auto_awesome, const Color(0xFFFF4B55), big: true),
+        core('AI Guardian', 'Lindungi & Optimalkan', Icons.verified_user_rounded, const Color(0xFF10B998)),
       ]),
       const SizedBox(height: 24),
       glass(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -103,7 +104,7 @@ class _FoundationHomeState extends State<FoundationHome> {
       ])),
       const SizedBox(height: 12),
       const Center(child: Text('Data simulasi • Belum terhubung backend', style: TextStyle(color: Colors.blueGrey, fontSize: 11))),
-    ])))),
+    ]))))),
     bottomNavigationBar: SafeArea(top: false, child: Container(padding: const EdgeInsets.fromLTRB(8, 7, 8, 8), decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.vertical(top: Radius.circular(25))), child: Row(children: [
       nav('Beranda', Icons.home_outlined), nav('Perusahaan', Icons.apartment_outlined), nav('AI Pusat', Icons.auto_awesome, central: true), nav('Laporan', Icons.bar_chart_outlined), nav('Pengaturan', Icons.settings_outlined),
     ]))),

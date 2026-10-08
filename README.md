@@ -1,3 +1,11 @@
+
+## AI Foundation UI (Oktober 2026)
+
+Entry point `lib/main.dart` kini membuka `lib/ai_foundation_home.dart`. Tema: header coral merah, latar gradasi abu-putih lembut, kartu putih translucent, navigasi AI Pusat di tengah. Modul navigasi berada di `lib/foundation_pages.dart`: AI Pusat, Perusahaan, Monitor, Budgeting, Approval, Tools & Integrasi, Laporan, dan Pengaturan. Semua statistik, perusahaan, anggaran, dan aktivitas adalah DATA DEMO. Integrasi API, autentikasi, persistence, approval sungguhan, dan pengelolaan kredensial aman belum diimplementasikan. Jangan masukkan API key sungguhan ke source Flutter.
+
+Status validasi: perubahan UI telah di-commit, tetapi belum dinyatakan lulus `flutter analyze`, widget tests, atau build APK pada commit ini. README lama di bawah mendeskripsikan prototipe EWASHO yang dipakai sebagai basis historis.
+
+---
 # EWASHO
 
 Prototipe beranda kasir laundry menggunakan Flutter. Efek kaca hanya pada slider; kartu omzet, grid menu dan navigasi memakai warna solid. Tanpa dependensi tambahan.

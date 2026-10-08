@@ -16,7 +16,10 @@ const muted = Color(0xFF747D8C);
 const cream = Color(0xFFFFEFF0);
 const enableGlass = true;
 
-void main() => runApp(const EwashoApp());
+import 'ai_foundation_home.dart' as foundation;
+
+void main() => foundation.main();
+
 
 class EwashoApp extends StatelessWidget {
   const EwashoApp({super.key});
